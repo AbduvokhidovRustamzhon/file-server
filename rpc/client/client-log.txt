@@ -1,0 +1,35 @@
+2020/02/20 21:03:49 client connecting
+2020/02/20 21:03:49 client connected
+2020/02/20 21:03:49 command sending
+2020/02/20 21:03:49 command sent
+2020/02/20 21:03:49 file not such: <nil>
+2020/02/20 21:07:17 client connecting
+2020/02/20 21:07:17 client connected
+2020/02/20 21:07:17 command sending
+2020/02/20 21:07:17 command sent
+2020/02/20 21:07:17 result: ok
+2020/02/20 21:07:17 181
+2020/02/20 21:07:17 can't write file: open rpc/client/files/123.txt: The system cannot find the path specified.
+2020/02/20 21:10:26 client connecting
+2020/02/20 21:10:26 client connected
+2020/02/20 21:10:26 command sending
+2020/02/20 21:10:26 command sent
+2020/02/20 21:10:26 result: ok
+2020/02/20 21:10:26 181
+2020/02/20 21:10:26 can't write file: open rpc/client/files/123.txt: The system cannot find the path specified.
+2020/02/20 21:12:11 client connecting
+2020/02/20 21:12:11 client connected
+2020/02/20 21:12:11 command sending
+2020/02/20 21:12:11 command sent
+2020/02/20 21:12:11 result: ok
+2020/02/20 21:12:11 181
+2020/02/20 21:12:47 client connecting
+2020/02/20 21:12:47 client connected
+2020/02/20 21:12:47 command sending
+2020/02/20 21:12:47 command sent
+2020/02/20 21:12:47 123.txt
+2020/02/20 21:12:47 242
+2020/02/20 21:13:08 client connecting
+2020/02/20 21:13:08 client connected
+2020/02/20 21:13:08 command sending
+2020/02/20 21:13:08 command sent

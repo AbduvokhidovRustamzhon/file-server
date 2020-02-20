@@ -44,13 +44,18 @@ const Upd = "Upload"
 const List = "List"
 const Quit = "quit"
 const CheckError = "result: error"
-const WayForServer = "files/"
 const CheckOk = "result: ok"
 const Addr = "0.0.0.0:9999"
 const Tcp = "tcp"
 const Suffix = "\n"
-const WayInServer = "files"
 const AddrClient = "localhost:9999"
+// для нормальной работы
+/*const WayForServer = "rpc/server/files/"
+const WayInServer = "rpc/server/files"
+const WayForClient = "files/"
+*/// для сервера
+const WayForServer = "files/"
+const WayInServer = "files"
 const WayForClient = "files/"
 
 const TimeSleep = 1_000_000_000

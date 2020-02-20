@@ -97,7 +97,7 @@ func Test_UploadInServerOk(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Can't open file: %v",err)
 	}
-	openFile, err := os.OpenFile(rpc.WayForServer+"testFile/"+options,os.O_CREATE|os.O_TRUNC|os.O_RDONLY, 0666)
+	openFile, err := os.OpenFile("testFile/"+options,os.O_CREATE|os.O_TRUNC|os.O_RDONLY, 0666)
 	if err != nil {
 		t.Fatalf("can't create file: %v", err)
 	}
@@ -118,7 +118,7 @@ func Test_UploadInServerOk(t *testing.T) {
 	if err != nil {
 		log.Fatalf("can't Read file: %v",err)
 	}
-	fileServer, err := ioutil.ReadFile(rpc.WayForServer+"testFile/"+ options)
+	fileServer, err := ioutil.ReadFile("testFile/"+ options)
 	if err != nil {
 		log.Fatalf("can't Read file: %v",err)
 	}
