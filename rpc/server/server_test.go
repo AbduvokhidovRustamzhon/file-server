@@ -97,7 +97,7 @@ func Test_UploadInServerOk(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Can't open file: %v",err)
 	}
-	openFile, err := os.OpenFile(options,os.O_CREATE|os.O_TRUNC|os.O_RDONLY, 0666)
+	openFile, err := os.OpenFile("testFile/"+options,os.O_CREATE|os.O_TRUNC|os.O_RDONLY, 0666)
 	if err != nil {
 		t.Fatalf("can't create file: %v", err)
 	}
