@@ -43,7 +43,12 @@ func start(addr string) (err error) {
 		log.Fatalf("can't listen %s: %v", addr, err)
 		return err
 	}
-	defer listener.Close()
+	defer func() {
+		err := listener.Close()
+		if err != nil {
+			log.Fatalf("Can't close conn: %v", err)
+		}
+	}()
 	for {
 		conn, err := listener.Accept()
 		log.Print("accept connection")
