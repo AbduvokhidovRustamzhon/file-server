@@ -4,12 +4,10 @@ import (
 	"bufio"
 	bytes2 "bytes"
 	"fmt"
-	"io"
 	"io/ioutil"
 	"log"
 	"math/rand"
 	"net"
-	"os"
 	"server/pkg/rpc"
 	"testing"
 	"time"
@@ -75,7 +73,7 @@ func Test_DownloadInServerError(t *testing.T) {
 	}
 }
 
-func Test_UploadInServerOk(t *testing.T) {
+func Test_UploadToServerOk(t *testing.T) {
 	host := "localhost"
 	port := rand.Intn(999) + 9000
 	addr := fmt.Sprintf("%s:%d", host, port)
@@ -90,64 +88,32 @@ func Test_UploadInServerOk(t *testing.T) {
 	if err != nil {
 		t.Fatalf("can't connect to server: %v", err)
 	}
-	_ = bufio.NewWriter(conn)
+	writer := bufio.NewWriter(conn)
+
 	options := "123.txt"
 	_ = rpc.Upd + ":" + options
-	file, err := os.OpenFile("files/" + options, os.O_APPEND|os.O_RDONLY, 0666)
+	src, err := ioutil.ReadFile("files/123.txt")
 	if err != nil {
-		t.Fatalf("Can't open file: %v",err)
+		log.Fatalf("Can't read file: %v",err)
 	}
-	openFile, err := os.OpenFile("testFile/"+options,os.O_CREATE|os.O_TRUNC|os.O_RDONLY, 0666)
+	_, err = writer.Write(src)
 	if err != nil {
-		t.Fatalf("can't create file: %v", err)
+		log.Fatalf("Can't write: %v", err)
 	}
-	defer func() {
-		err = openFile.Close()
-		if err != nil {
-			t.Fatalf("can't close: %v",err)
-		}
-	}()
-	bytes, err := io.Copy(openFile, file)
+	err = writer.Flush()
 	if err != nil {
-		t.Fatalf("Can't copy file: %v", err)
+		log.Fatalf("Can't flush: %v", err)
 	}
-	log.Print(bytes)
-
-	fileClient, err := ioutil.ReadFile(rpc.WayForClient + options)
+	err = conn.Close()
+	if err != nil {
+		log.Fatalf("Can't close conn: %v", err)
+	}
+	dst, err := ioutil.ReadFile(rpc.WayForClient + options)
 	if err != nil {
 		log.Fatalf("can't Read file: %v",err)
 	}
-	fileServer, err := ioutil.ReadFile("testFile/"+ options)
-	if err != nil {
-		log.Fatalf("can't Read file: %v",err)
-	}
-	if !bytes2.Equal(fileClient,fileServer) {
-		t.Fatalf("Плохо %s %s %v", fileClient,fileServer, err)
-	}
-	//conn.Close()
-}
-
-func Test_UploadInServerError(t *testing.T) {
-	host := "localhost"
-	port := rand.Intn(999) + 9000
-	addr := fmt.Sprintf("%s:%d", host, port)
-	go func() {
-		err := start(addr)
-		if err != nil {
-			t.Fatalf("can't start server: %v", err)
-		}
-	}()
-	time.Sleep(rpc.TimeSleep)
-	conn, err := net.Dial(rpc.Tcp, addr)
-	if err != nil {
-		t.Fatalf("can't connect to server: %v", err)
-	}
-	_ = bufio.NewWriter(conn)
-	options := "1234.txt"
-	_ = rpc.Upd + ":" + options
-	_, err = os.Open(rpc.WayForClient + options)
-	if err == nil {
-		t.Fatal("We should not go here.")
+	if !bytes2.Equal(src, dst) {
+		t.Fatalf("files are not equal: %v", err)
 	}
 }
 
