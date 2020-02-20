@@ -93,7 +93,7 @@ func Test_UploadInServerOk(t *testing.T) {
 	_ = bufio.NewWriter(conn)
 	options := "123.txt"
 	_ = rpc.Upd + ":" + options
-	file, err := os.Open("files/" + options)
+	file, err := os.OpenFile("files/" + options, os.O_RDONLY, 0666)
 	if err != nil {
 		t.Fatalf("Can't open file: %v",err)
 	}
