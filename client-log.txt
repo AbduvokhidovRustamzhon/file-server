@@ -62,3 +62,18 @@
 2020/02/20 16:42:39 command sending
 2020/02/20 16:42:39 command sent
 2020/02/20 16:42:39 file does not exist
+2020/02/20 20:50:37 client connecting
+2020/02/20 20:50:37 client connected
+2020/02/20 20:50:37 command sending
+2020/02/20 20:50:37 command sent
+2020/02/20 20:50:37 file not such: <nil>
+2020/02/20 20:52:04 client connecting
+2020/02/20 20:52:04 client connected
+2020/02/20 20:52:04 command sending
+2020/02/20 20:52:04 command sent
+2020/02/20 20:52:04 result: ok
+2020/02/20 20:52:04 181
+2020/02/20 20:52:09 client connecting
+2020/02/20 20:52:09 client connected
+2020/02/20 20:52:09 command sending
+2020/02/20 20:52:09 command sent

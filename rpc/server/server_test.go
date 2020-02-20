@@ -93,11 +93,11 @@ func Test_UploadInServerOk(t *testing.T) {
 	_ = bufio.NewWriter(conn)
 	options := "123.txt"
 	_ = rpc.Upd + ":" + options
-	file, err := os.Open(rpc.WayForClients + options)
+	file, err := os.Open(rpc.WayForClient + options)
 	if err != nil {
 		t.Fatalf("Can't open file: %v",err)
 	}
-	openFile, err := os.OpenFile(rpc.WayForServers+"testFile/"+options,os.O_CREATE|os.O_TRUNC|os.O_RDONLY, 0666)
+	openFile, err := os.OpenFile(rpc.WayForServer+"testFile/"+options,os.O_CREATE|os.O_TRUNC|os.O_RDONLY, 0666)
 	if err != nil {
 		t.Fatalf("can't create file: %v", err)
 	}
@@ -114,11 +114,11 @@ func Test_UploadInServerOk(t *testing.T) {
 	log.Print(bytes)
 
 
-	fileClient, err := ioutil.ReadFile(rpc.WayForClients + options)
+	fileClient, err := ioutil.ReadFile(rpc.WayForClient + options)
 	if err != nil {
 		log.Fatalf("can't Read file: %v",err)
 	}
-	fileServer, err := ioutil.ReadFile(rpc.WayForServers+"testFile/"+ options)
+	fileServer, err := ioutil.ReadFile(rpc.WayForServer+"testFile/"+ options)
 	if err != nil {
 		log.Fatalf("can't Read file: %v",err)
 	}
@@ -146,7 +146,7 @@ func Test_UploadInServerError(t *testing.T) {
 	_ = bufio.NewWriter(conn)
 	options := "1234.txt"
 	_ = rpc.Upd + ":" + options
-	_, err = os.Open(rpc.WayForClients + options)
+	_, err = os.Open(rpc.WayForClient + options)
 	if err == nil {
 		t.Fatal("We should not go here.")
 	}
