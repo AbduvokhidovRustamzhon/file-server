@@ -11,29 +11,6 @@ import (
 	"time"
 )
 
-func Test_server(t *testing.T) {
-	host := "localhost"
-	port := rand.Intn(999) + 9000
-	addr := fmt.Sprintf("%s:%d", host, port)
-	go func() {
-		err := start(addr)
-		if err != nil {
-			t.Fatalf("can't start server: %v", err)
-		}
-	}()
-	time.Sleep(rpc.TimeSleep)
-	conn, err := net.Dial(rpc.Tcp, rpc.AddrClient)
-	if err != nil {
-		t.Fatalf("can't connect to server: %v", err)
-	}
-	defer func() {
-		err := conn.Close()
-		if err != nil {
-			t.Fatalf("Can't close conn: %v", err)
-		}
-	}()
-}
-
 func Test_DownloadInServerOk(t *testing.T) {
 	host := "localhost"
 	port := rand.Intn(999) + 9000
