@@ -37,3 +37,20 @@ func ReadDir(line string) (fileList string) {
 	fileList = fileList + "\n"
 	return fileList
 }
+
+
+const Dwn = "Download"
+const Upd = "Upload"
+const List = "List"
+const Quit = "quit"
+const CheckError = "result: error"
+const WayForServer = "rpc/server/files/"
+const CheckOk = "result: ok"
+const Addr = "0.0.0.0:9999"
+const Tcp = "tcp"
+const Suffix = "\n"
+const WayInServer = "rpc/server/files"
+const AddrClient = "localhost:9999"
+const WayForClient = "rpc/client/files/"
+
+const TimeSleep = 1_000_000_000

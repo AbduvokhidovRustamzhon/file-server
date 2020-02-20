@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	"io"
 	"io/ioutil"
 	"log"
@@ -12,103 +13,133 @@ import (
 )
 
 func main() {
-	const addr = "0.0.0.0:9999"
-	log.Print("server starting")
-	listener, err := net.Listen("tcp", addr)
+	file, err := os.OpenFile("server-log.txt", os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0666)
 	if err != nil {
-		log.Fatalf("can't listen on %s: %v", addr, err)
+		log.Fatal(err)
 	}
-	defer listener.Close()
-	log.Print("server started")
-	for {
-		conn, err := listener.Accept()
+	defer func() {
+		err := file.Close()
 		if err != nil {
-			log.Printf("can't accept connection: %v", err)
-			continue
+			log.Printf("Can't close file: %v", err)
 		}
-		go handleConn(conn)
-		//defer conn.Close() -> defer в цикле не делается!
+	}()
+	log.Print("server starting")
+	host := "0.0.0.0"
+	port, ok := os.LookupEnv("PORT")
+	if !ok {
+		port = "9999"
+	}
+	err = start(fmt.Sprintf("%s:%s", host, port))
+	if err != nil {
+		log.Fatal(err)
 	}
 }
 
-func handleConn(conn net.Conn) {
-	defer conn.Close()
+// filepath
+
+func start(addr string) (err error) {
+	listener, err := net.Listen(rpc.Tcp, addr)
+	if err != nil {
+		log.Fatalf("can't listen %s: %v", addr, err)
+		return err
+	}
+	defer listener.Close()
+	for {
+		conn, err := listener.Accept()
+		log.Print("accept connection")
+		if err != nil {
+			log.Fatalf("can't accept: %v", err)
+			continue
+		}
+		log.Print("handle connection")
+		go handleConn(conn)
+	}
+}
+
+func handleConn(conn net.Conn) error{
+	defer func() {
+		err := conn.Close()
+		if err != nil {
+			log.Fatalf("Can't close conn: %v", err)
+		}
+	}()
 	reader := bufio.NewReader(conn)
 	line, err := rpc.ReadLine(reader)
 	if err != nil {
-		log.Printf("error while reading: %v", err)
-		return
+		log.Fatalf("error while reading: %v", err)
+		return err
 	}
 	index := strings.IndexByte(line, ':')
 	writer := bufio.NewWriter(conn)
 	if index == -1 {
-		// TODO: неправильно ввёл команду
-		//conn.Write([]byte("error: invalid line"))
 		log.Printf("invalid line received %s", line)
 		err := rpc.WriteLine("error: invalid line", writer)
 		if err != nil {
 			log.Printf("error while writing: %v", err)
-			return
+			return err
 		}
-		return
+		return err
 	}
-
 	cmd, options := line[:index], line[index+1:]
 	log.Printf("command received: %s", cmd)
 	log.Printf("options received: %s", options)
-
 	switch cmd {
-	case "Upload":
-		options := strings.TrimSuffix(options, "\n")
+	case rpc.Upd:
+		options := strings.TrimSuffix(options, rpc.Suffix)
 		line, err := rpc.ReadLine(reader)
 		if err != nil {
 			log.Printf("can't read: %v", err)
-			return
+			return err
 		}
-		if line == "result: error\n"{
+		if line == rpc.CheckError + rpc.Suffix {
 			log.Printf("file not such: %v", err)
-			return
+			return err
 		}
-
-		bytes, err := ioutil.ReadAll(reader) // while not EOF
+		bytes, err := ioutil.ReadAll(reader)
 		if err != nil {
 			if err != io.EOF {
 				log.Printf("can't read data: %v", err)
+				return err
 			}
 		}
-		err = ioutil.WriteFile("rpc/server/files/" + options, bytes, 0666)
+		err = ioutil.WriteFile(rpc.WayForServer+options, bytes, 0666)
 		if err != nil {
 			log.Printf("can't write file: %v", err)
+			return err
 		}
-	case "Download":
-		options = strings.TrimSuffix(options, "\n")
-		file, err := os.Open("rpc/server/files/" + options)
+	case rpc.Dwn:
+		options = strings.TrimSuffix(options, rpc.Suffix)
+		file, err := os.Open(rpc.WayForServer + options)
 		if err != nil {
 			log.Print("file does not exist")
-			err = rpc.WriteLine("result: error", writer)
-			return
+			err = rpc.WriteLine(rpc.CheckError, writer)
+			return err
 		}
-		err = rpc.WriteLine("result: ok", writer)
+		err = rpc.WriteLine(rpc.CheckOk, writer)
 		if err != nil {
 			log.Printf("error while writing: %v", err)
-			return
+			return err
 		}
-		//name := file.Name()
 		_, err = io.Copy(writer, file)
-		//writer.Flush()
-		case "List":
-			options = strings.TrimSuffix(options,"\n")
-			fileName := rpc.ReadDir("rpc/"+ options + "/files")
-			err := rpc.WriteLine(fileName, writer)
-			if err != nil {
-			log.Printf("error while writing: %v", err)
-			return
-			}
-	default:
-		err := rpc.WriteLine("result: error", writer)
+		err = writer.Flush()
+		if err != nil {
+			log.Printf("Can't flush: %v", err)
+			return err
+		}
+	case rpc.List:
+		options = strings.TrimSuffix(options, rpc.Suffix)
+		fileName := rpc.ReadDir(rpc.WayInServer)
+		err := rpc.WriteLine(fileName, writer)
 		if err != nil {
 			log.Printf("error while writing: %v", err)
-			return
+			return err
+		}
+	default:
+		err := rpc.WriteLine(rpc.CheckError, writer)
+		if err != nil {
+			log.Printf("error while writing: %v", err)
+			return err
 		}
 	}
+	return nil
 }
