@@ -49,10 +49,10 @@ const CheckOk = "result: ok"
 const Addr = "0.0.0.0:9999"
 const Tcp = "tcp"
 const Suffix = "\n"
-const WayInServer = "rpc/server/files"
+const WayInServer = "/files"
 const AddrClient = "localhost:9999"
 const WayForClient = "files/"
-const WayForClients = "rpc/client/files/"
-const WayForServers = "rpc/server/"
+const WayForClients = "files/"
+const WayForServers = ""
 
 const TimeSleep = 1_000_000_000
