@@ -66,6 +66,7 @@ func handleConn(conn net.Conn) error{
 	reader := bufio.NewReader(conn)
 	line, err := rpc.ReadLine(reader)
 	if err != nil {
+
 		log.Fatalf("error while reading: %v", err)
 		return err
 	}
@@ -105,6 +106,11 @@ func handleConn(conn net.Conn) error{
 		err = ioutil.WriteFile(rpc.WayForServer+options, bytes, 0666)
 		if err != nil {
 			log.Printf("can't write file: %v", err)
+			return err
+		}
+		err = rpc.WriteLine(rpc.CheckOk, writer)
+		if err != nil {
+			log.Printf("error while writing: %v", err)
 			return err
 		}
 	case rpc.Dwn:

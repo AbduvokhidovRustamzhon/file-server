@@ -39,3 +39,26 @@
 2020/02/20 13:08:57 client connected
 2020/02/20 13:08:57 command sending
 2020/02/20 13:08:57 command sent
+2020/02/20 16:41:09 client connecting
+2020/02/20 16:41:09 client connected
+2020/02/20 16:41:09 command sending
+2020/02/20 16:41:09 command sent
+2020/02/20 16:41:09 client connecting
+2020/02/20 16:41:09 client connected
+2020/02/20 16:41:09 command sending
+2020/02/20 16:41:09 command sent
+2020/02/20 16:42:00 client connecting
+2020/02/20 16:42:00 client connected
+2020/02/20 16:42:00 command sending
+2020/02/20 16:42:00 command sent
+2020/02/20 16:42:22 client connecting
+2020/02/20 16:42:22 client connected
+2020/02/20 16:42:22 command sending
+2020/02/20 16:42:22 command sent
+2020/02/20 16:42:22 result: ok
+2020/02/20 16:42:22 0
+2020/02/20 16:42:39 client connecting
+2020/02/20 16:42:39 client connected
+2020/02/20 16:42:39 command sending
+2020/02/20 16:42:39 command sent
+2020/02/20 16:42:39 file does not exist
