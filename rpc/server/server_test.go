@@ -37,7 +37,7 @@ func Test_DownloadInServerOk(t *testing.T) {
 	}
 	reader := bufio.NewReader(conn)
 	line, err = rpc.ReadLine(reader)
-	src, err := ioutil.ReadFile("testdata/123.txt")
+	src, err := ioutil.ReadFile("rpc/server/testdata/123.txt")
 	if err != nil {
 		log.Fatalf("Can't read file: %v",err)
 	}
@@ -72,7 +72,7 @@ func Test_UploadToServerOk(t *testing.T) {
 	if err != nil {
 		t.Fatalf("can't send command %s to server: %v", line, err)
 	}
-	src, err := ioutil.ReadFile("testdata/123.txt")
+	src, err := ioutil.ReadFile("rpc/server/testdata/123.txt")
 	if err != nil {
 		log.Fatalf("Can't read file: %v",err)
 	}
