@@ -49,9 +49,9 @@ const Tcp = "tcp"
 const Suffix = "\n"
 const AddrClient = "localhost:9999"
 
-const WayForServer = "rpc/server/files/"
-const WayInServer = "rpc/server/files"
-const WayForClient = "rpc/client/files/"
+const WayForServer = "files/"
+const WayInServer = "files"
+const WayForClient = "files/"
 
 
 const TimeSleep = 1_000_000_000

@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"flag"
 	"fmt"
 	"io"
 	"io/ioutil"
@@ -11,26 +12,9 @@ import (
 	"server/pkg/rpc"
 	"strings"
 )
-
-func operationsLoop(commands string, loop func(cmd string, file string) bool) {
-	for {
-		fmt.Println(commands)
-		var cmd string
-		_, err := fmt.Scan(&cmd)
-		var file string
-		if cmd == rpc.Upd || cmd == rpc.Dwn {
-			_, err = fmt.Scan(&file)
-		}else{
-			file = ""
-		}
-		if err != nil {
-			log.Fatalf("Can't read input: %v", err) // %v - natural ...
-		}
-		if exit := loop(strings.TrimSpace(cmd), file); exit {
-			return
-		}
-	}
-}
+var download = flag.String("download", "default", "Download")
+var upload = flag.String("upload", "default", "Upload")
+var list = flag.Bool("List", false, "List")
 
 func main() {
 	file, err := os.OpenFile("client-log.txt", os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0666)
@@ -44,7 +28,20 @@ func main() {
 		}
 	}()
 	log.SetOutput(file)
-	operationsLoop(operations, StartingOperationsLoop)
+	flag.Parse()
+	var cmd, fileName string
+	if *download != "default" {
+		fileName = *download
+		cmd = rpc.Dwn
+	} else if *upload != "default" {
+		cmd = rpc.Upd
+		fileName = *upload
+	} else if *list != false {
+		cmd = rpc.List
+		fileName = ""
+	} else{
+		return}
+	StartingOperationsLoop(cmd, fileName)
 }
 
 func StartingOperationsLoop(cmd string, fileName string) (exit bool) {
