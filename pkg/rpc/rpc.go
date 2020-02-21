@@ -48,13 +48,10 @@ const CheckOk = "result: ok"
 const Tcp = "tcp"
 const Suffix = "\n"
 const AddrClient = "localhost:9999"
-// для нормальной работы
-/*const WayForServer = "rpc/server/files/"
+
+const WayForServer = "rpc/server/files/"
 const WayInServer = "rpc/server/files"
-const WayForClient = "files/"
-*/// для сервера
-const WayForServer = "files/"
-const WayInServer = "files"
-const WayForClient = "files/"
+const WayForClient = "rpc/client/files/"
+
 
 const TimeSleep = 1_000_000_000

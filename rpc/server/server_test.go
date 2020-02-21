@@ -37,39 +37,16 @@ func Test_DownloadInServerOk(t *testing.T) {
 	}
 	reader := bufio.NewReader(conn)
 	line, err = rpc.ReadLine(reader)
-	log.Print(line)
-	if line != "result: ok\n" {
-		t.Fatalf("result not ok: %s %v", line, err)
-	}
-}
-
-func Test_DownloadInServerError(t *testing.T) {
-	host := "localhost"
-	port := rand.Intn(999) + 9000
-	addr := fmt.Sprintf("%s:%d", host, port)
-	go func() {
-		err := start(addr)
-		if err != nil {
-			t.Fatalf("can't start server: %v", err)
-		}
-	}()
-	time.Sleep(rpc.TimeSleep)
-	conn, err := net.Dial(rpc.Tcp, addr)
+	src, err := ioutil.ReadFile("rpc/server/testdata/123.txt")
 	if err != nil {
-		t.Fatalf("can't connect to server: %v", err)
+		log.Fatalf("Can't read file: %v",err)
 	}
-	writer := bufio.NewWriter(conn)
-	options := "1234.txt"
-	line := rpc.Dwn + ":" + options
-	err = rpc.WriteLine(line, writer)
+	dst, err := ioutil.ReadFile(rpc.WayForServer + options)
 	if err != nil {
-		t.Fatalf("can't send command %s to server: %v", line, err)
+		log.Fatalf("can't Read file: %v",err)
 	}
-	reader := bufio.NewReader(conn)
-	line, err = rpc.ReadLine(reader)
-	log.Print(line)
-	if line != "result: error\n" {
-		t.Fatalf("result not ok: %s %v", line, err)
+	if !bytes2.Equal(src, dst) {
+		t.Fatalf("files are not equal: %v", err)
 	}
 }
 
@@ -89,10 +66,13 @@ func Test_UploadToServerOk(t *testing.T) {
 		t.Fatalf("can't connect to server: %v", err)
 	}
 	writer := bufio.NewWriter(conn)
-
 	options := "123.txt"
-	_ = rpc.Upd + ":" + options
-	src, err := ioutil.ReadFile("files/123.txt")
+	line := rpc.Upd + ":" + options
+	err = rpc.WriteLine(line, writer)
+	if err != nil {
+		t.Fatalf("can't send command %s to server: %v", line, err)
+	}
+	src, err := ioutil.ReadFile("rpc/server/testdata/123.txt")
 	if err != nil {
 		log.Fatalf("Can't read file: %v",err)
 	}
@@ -108,7 +88,7 @@ func Test_UploadToServerOk(t *testing.T) {
 	if err != nil {
 		log.Fatalf("Can't close conn: %v", err)
 	}
-	dst, err := ioutil.ReadFile(rpc.WayForClient + options)
+	dst, err := ioutil.ReadFile(rpc.WayForServer + options)
 	if err != nil {
 		log.Fatalf("can't Read file: %v",err)
 	}
@@ -141,7 +121,7 @@ func Test_ListInServerOk(t *testing.T)  {
 	}
 	reader := bufio.NewReader(conn)
 	line, err = rpc.ReadLine(reader)
-	if line != "123.txt\n" {
+	if line != "1.txt 123.txt\n" {
 		t.Fatalf("result not ok: %s %v", line, err)
 	}
 }

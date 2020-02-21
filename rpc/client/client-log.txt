@@ -33,3 +33,71 @@
 2020/02/20 21:13:08 client connected
 2020/02/20 21:13:08 command sending
 2020/02/20 21:13:08 command sent
+2020/02/21 14:39:33 client connecting
+2020/02/21 14:39:33 client connected
+2020/02/21 14:39:33 command sending
+2020/02/21 14:39:33 command sent
+2020/02/21 14:39:33 file does not exist
+2020/02/21 14:39:40 client connecting
+2020/02/21 14:39:40 client connected
+2020/02/21 14:39:40 command sending
+2020/02/21 14:39:40 command sent
+2020/02/21 14:39:40 result: ok
+2020/02/21 14:39:40 242
+2020/02/21 14:39:40 can't write file: open rpc/client/files/123.txt: The system cannot find the path specified.
+2020/02/21 14:46:59 client connecting
+2020/02/21 14:46:59 client connected
+2020/02/21 14:46:59 command sending
+2020/02/21 14:46:59 command sent
+2020/02/21 14:48:12 client connecting
+2020/02/21 14:48:12 client connected
+2020/02/21 14:48:12 command sending
+2020/02/21 14:48:12 command sent
+2020/02/21 14:48:48 client connecting
+2020/02/21 14:48:48 client connected
+2020/02/21 14:48:48 command sending
+2020/02/21 14:48:48 command sent
+2020/02/21 14:49:32 result: ok
+2020/02/21 14:49:35 242
+2020/02/21 14:49:37 can't write file: open rpc/client/files/123.txt: The system cannot find the path specified.
+2020/02/21 14:50:36 client connecting
+2020/02/21 14:50:36 client connected
+2020/02/21 14:50:36 command sending
+2020/02/21 14:50:36 command sent
+2020/02/21 14:50:39 result: ok
+2020/02/21 14:50:45 242
+2020/02/21 14:51:26 client connecting
+2020/02/21 14:51:26 client connected
+2020/02/21 14:51:26 command sending
+2020/02/21 14:51:26 command sent
+2020/02/21 14:51:30 result: ok
+2020/02/21 14:52:27 client connecting
+2020/02/21 14:52:27 client connected
+2020/02/21 14:52:27 command sending
+2020/02/21 14:52:27 command sent
+2020/02/21 14:52:43 result: ok
+2020/02/21 14:57:08 client connecting
+2020/02/21 14:57:08 client connected
+2020/02/21 14:57:08 command sending
+2020/02/21 14:57:08 command sent
+2020/02/21 14:58:42 result: ok
+2020/02/21 15:06:31 client connecting
+2020/02/21 15:06:31 client connected
+2020/02/21 15:06:31 command sending
+2020/02/21 15:06:31 command sent
+2020/02/21 15:06:31 file not such: <nil>
+2020/02/21 15:06:39 client connecting
+2020/02/21 15:06:39 client connected
+2020/02/21 15:06:39 command sending
+2020/02/21 15:06:39 command sent
+2020/02/21 15:06:39 123.txt
+2020/02/21 15:06:39 242
+2020/02/21 15:07:58 client connecting
+2020/02/21 15:07:58 client connected
+2020/02/21 15:07:58 command sending
+2020/02/21 15:07:58 command sent
+2020/02/21 15:07:58 file not such: <nil>
+2020/02/21 15:08:02 client connecting
+2020/02/21 15:08:02 client connected
+2020/02/21 15:08:02 command sending
+2020/02/21 15:08:02 command sent
