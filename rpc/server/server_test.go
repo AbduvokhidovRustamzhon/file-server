@@ -45,6 +45,7 @@ func Test_DownloadInServerOk(t *testing.T) {
 	if err != nil {
 		log.Fatalf("can't Read file: %v",err)
 	}
+	log.Printf("%d, %d\n", src, dst)
 	if !bytes2.Equal(src, dst) {
 		t.Fatalf("files are not equal: %v", err)
 	}
