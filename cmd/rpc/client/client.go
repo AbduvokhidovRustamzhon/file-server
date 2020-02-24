@@ -143,7 +143,7 @@ func listFile(conn net.Conn) {
 	fmt.Println("Список доступных файлов в сервере")
 	var list string
 	for i := 0; i < len(line); i++{
-		if string(line[i]) == " " || string(line[i]) == "\n"{
+		if string(line[i]) == " " || string(line[i]) == rpc.Suffix{
 			fmt.Println(list)
 			list = ""
 		} else {
