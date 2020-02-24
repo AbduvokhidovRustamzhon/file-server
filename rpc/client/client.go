@@ -12,6 +12,7 @@ import (
 	"server/pkg/rpc"
 	"strings"
 )
+
 var download = flag.String("download", "default", "Download")
 var upload = flag.String("upload", "default", "Upload")
 var list = flag.Bool("List", false, "List")
