@@ -18,7 +18,7 @@ var upload = flag.String("upload", "default", "Upload")
 var list = flag.Bool("List", false, "List")
 
 func main() {
-	file, err := os.OpenFile("client-log.txt", os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0666)
+	file, err := os.Create("client-log.txt")
 	if err != nil {
 		log.Fatal(err)
 	}

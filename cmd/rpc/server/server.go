@@ -13,7 +13,7 @@ import (
 )
 
 func main() {
-	file, err := os.OpenFile("server-log.txt", os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0666)
+	file, err := os.Create("server-log.txt")
 	if err != nil {
 		log.Fatal(err)
 	}
